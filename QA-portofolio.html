@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Haddid Syayyidiaz — QA Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Fira+Code:wght@300;400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;1,9..144,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f2eb;
+    --bg2: #ede9e0;
+    --surface: #ffffff;
+    --surface2: #faf8f4;
+    --border: #ddd8ce;
+    --ink: #1a1714;
+    --ink2: #3d3830;
+    --muted: #8c8478;
+    --accent: #c8602a;
+    --accent2: #2a7a5c;
+    --accent3: #3a5ca8;
+    --tag-bg: #ede9e0;
+    --mono: 'Fira Code', monospace;
+    --display: 'Fraunces', serif;
+    --body: 'Space Grotesk', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 15px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* TEXTURE */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 20px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(245,242,235,0.92);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: var(--display);
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: -0.5px;
+  }
+
+  .nav-logo span { color: var(--accent); }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 120px 48px 80px;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .hero-left {}
+
+  .hero-eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    opacity: 0;
+    animation: fadeUp 0.5s ease forwards 0.1s;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    width: 24px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .hero h1 {
+    font-family: var(--display);
+    font-size: clamp(40px, 5.5vw, 72px);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -2px;
+    color: var(--ink);
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: fadeUp 0.5s ease forwards 0.25s;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-desc {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.85;
+    max-width: 440px;
+    margin-bottom: 36px;
+    opacity: 0;
+    animation: fadeUp 0.5s ease forwards 0.4s;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.5s ease forwards 0.55s;
+  }
+
+  .btn {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 13px 26px;
+    text-decoration: none;
+    border: 1.5px solid;
+    transition: all 0.2s;
+    cursor: pointer;
+    display: inline-block;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+  }
+
+  .btn-primary:hover {
+    background: transparent;
+    color: var(--accent);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--ink2);
+    border-color: var(--border);
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--ink2);
+  }
+
+  /* HERO RIGHT — CARD STACK */
+  .hero-right {
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards 0.7s;
+  }
+
+  .card-stack {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .metric-card {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    padding: 24px 28px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .metric-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.07);
+  }
+
+  .metric-card:first-child {
+    border-left: 3px solid var(--accent);
+  }
+
+  .metric-card:nth-child(2) {
+    border-left: 3px solid var(--accent2);
+    margin-left: 20px;
+  }
+
+  .metric-card:nth-child(3) {
+    border-left: 3px solid var(--accent3);
+    margin-left: 40px;
+  }
+
+  .metric-num {
+    font-family: var(--display);
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--ink);
+  }
+
+  .metric-info {}
+  .metric-title {
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--ink);
+  }
+  .metric-sub {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+    margin-top: 2px;
+  }
+
+  /* LAYOUT UTILS */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 48px;
+  }
+
+  .section-wrap { padding: 100px 0; }
+
+  .section-eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-eyebrow::before {
+    content: '';
+    width: 20px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .section-title {
+    font-family: var(--display);
+    font-size: clamp(28px, 3.5vw, 46px);
+    font-weight: 700;
+    letter-spacing: -1.5px;
+    line-height: 1.1;
+    margin-bottom: 52px;
+    color: var(--ink);
+  }
+
+  .section-title em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  /* DIVIDER */
+  hr {
+    border: none;
+    border-top: 1px solid var(--border);
+  }
+
+  /* EXPERIENCE */
+  .exp-grid {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 64px;
+  }
+
+  .exp-sidebar {}
+
+  .exp-sidebar-intro {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.85;
+    margin-bottom: 28px;
+  }
+
+  .exp-quote {
+    border-left: 2px solid var(--accent);
+    padding: 16px 20px;
+    background: var(--surface2);
+    font-family: var(--display);
+    font-style: italic;
+    font-size: 15px;
+    color: var(--ink2);
+    line-height: 1.7;
+  }
+
+  .exp-items {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .exp-item {
+    padding: 32px 0;
+    border-bottom: 1px solid var(--border);
+    opacity: 0;
+    transform: translateY(12px);
+    transition: all 0.45s ease;
+  }
+
+  .exp-item:first-child { padding-top: 0; }
+  .exp-item:last-child { border-bottom: none; }
+
+  .exp-item.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .exp-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+
+  .exp-role {
+    font-family: var(--display);
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: var(--ink);
+  }
+
+  .exp-period {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent2);
+    background: rgba(42,122,92,0.08);
+    border: 1px solid rgba(42,122,92,0.2);
+    padding: 4px 10px;
+    white-space: nowrap;
+  }
+
+  .exp-company {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent);
+    letter-spacing: 0.5px;
+    margin-bottom: 14px;
+  }
+
+  .exp-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 14px;
+  }
+
+  .tag {
+    font-family: var(--mono);
+    font-size: 10px;
+    padding: 4px 10px;
+    background: var(--tag-bg);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    letter-spacing: 0.5px;
+  }
+
+  .tag.highlight {
+    background: rgba(200,96,42,0.07);
+    border-color: rgba(200,96,42,0.25);
+    color: var(--accent);
+  }
+
+  .exp-desc {
+    font-size: 14px;
+    color: var(--ink2);
+    line-height: 1.85;
+  }
+
+  .exp-bullets {
+    list-style: none;
+    margin-top: 10px;
+  }
+
+  .exp-bullets li {
+    font-size: 14px;
+    color: #5a5248;
+    line-height: 1.75;
+    padding-left: 16px;
+    position: relative;
+    margin-bottom: 4px;
+  }
+
+  .exp-bullets li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 11px;
+    top: 3px;
+  }
+
+  /* SKILLS */
+  .skills-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2px;
+    background: var(--border);
+  }
+
+  .skill-block {
+    background: var(--surface);
+    padding: 36px 32px;
+    transition: background 0.2s;
+  }
+
+  .skill-block:hover {
+    background: var(--surface2);
+  }
+
+  .skill-block-icon {
+    font-size: 28px;
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .skill-block-title {
+    font-family: var(--display);
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+
+  .skill-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .pill {
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 5px 12px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    background: var(--bg);
+    transition: all 0.15s;
+  }
+
+  .pill:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* APPROACH SECTION */
+  .approach-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+    background: var(--border);
+    margin-top: 0;
+  }
+
+  .approach-step {
+    background: var(--surface);
+    padding: 36px 28px;
+    position: relative;
+  }
+
+  .step-num {
+    font-family: var(--display);
+    font-size: 56px;
+    font-weight: 700;
+    color: var(--bg2);
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+
+  .step-title {
+    font-family: var(--display);
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 10px;
+    letter-spacing: -0.3px;
+  }
+
+  .step-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.75;
+  }
+
+  .step-accent {
+    width: 32px;
+    height: 2px;
+    background: var(--accent);
+    margin-bottom: 16px;
+  }
+
+  /* CONTACT */
+  .contact-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .contact-left h3 {
+    font-family: var(--display);
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -1px;
+    margin-bottom: 16px;
+    line-height: 1.2;
+  }
+
+  .contact-left p {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.85;
+    margin-bottom: 28px;
+  }
+
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--border);
+    text-decoration: none;
+    color: var(--ink);
+    transition: all 0.2s;
+  }
+
+  .contact-item:first-of-type { border-top: 1px solid var(--border); }
+
+  .contact-item:hover { padding-left: 8px; }
+
+  .contact-item-icon {
+    width: 36px;
+    height: 36px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    flex-shrink: 0;
+  }
+
+  .contact-item-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    display: block;
+  }
+
+  .contact-item-value {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+    display: block;
+    margin-top: 1px;
+  }
+
+  .contact-right {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    padding: 40px;
+  }
+
+  .contact-right h4 {
+    font-family: var(--display);
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin-bottom: 8px;
+  }
+
+  .contact-right p {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 24px;
+    line-height: 1.7;
+  }
+
+  .service-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .service-list li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: var(--ink2);
+  }
+
+  .service-list li::before {
+    content: '✓';
+    width: 22px;
+    height: 22px;
+    background: rgba(200,96,42,0.1);
+    color: var(--accent);
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-weight: 700;
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 28px 48px;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  footer p {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+  }
+
+  footer span { color: var(--accent); }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    .hero { grid-template-columns: 1fr; padding: 100px 24px 60px; gap: 48px; }
+    .hero-right { display: none; }
+    .container { padding: 0 24px; }
+    .exp-grid { grid-template-columns: 1fr; gap: 32px; }
+    .skills-layout { grid-template-columns: 1fr 1fr; }
+    .approach-grid { grid-template-columns: 1fr 1fr; }
+    .contact-layout { grid-template-columns: 1fr; gap: 40px; }
+    footer { padding: 24px; }
+  }
+
+  @media (max-width: 560px) {
+    .skills-layout, .approach-grid { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Haddid<span>.</span>QA</div>
+  <ul class="nav-links">
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#approach">Approach</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-left">
+    <p class="hero-eyebrow">Software QA Specialist</p>
+    <h1>QA Specialist with a <em>security</em> background — I test deeper than most.</h1>
+    <p class="hero-desc">
+      I'm Haddid — a QA Specialist currently working as a Cyber Security Engineer at PT Telkom Indonesia. My security background means I don't just find functional bugs — I catch the vulnerabilities most QA testers completely miss.
+    </p>
+    <div class="hero-cta">
+      <a href="#experience" class="btn btn-primary">View Experience</a>
+      <a href="#contact" class="btn btn-secondary">Hire Me</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="card-stack">
+      <div class="metric-card">
+        <div class="metric-num">3+</div>
+        <div class="metric-info">
+          <div class="metric-title">Years in QA & Testing</div>
+          <div class="metric-sub">Manual · Automation · Security QA</div>
+        </div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-num">5+</div>
+        <div class="metric-info">
+          <div class="metric-title">Projects & Organizations</div>
+          <div class="metric-sub">Enterprise · Startup · Freelance</div>
+        </div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-num">2x</div>
+        <div class="metric-info">
+          <div class="metric-title">QA + Security Combined</div>
+          <div class="metric-sub">The edge most QA testers don't have</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr>
+
+<!-- EXPERIENCE -->
+<div class="container" id="experience">
+  <div class="section-wrap">
+    <p class="section-eyebrow">01 — Career</p>
+    <h2 class="section-title">QA <em>Experience</em></h2>
+    <div class="exp-grid">
+      <div class="exp-sidebar">
+        <p class="exp-sidebar-intro">
+          My QA journey is backed by real security experience — I've worked as a Cyber Security Engineer at PT Telkom Indonesia and PT Difini Teknologi, which means I bring a deeper level of scrutiny to every test cycle. I don't just test features; I think like an attacker.
+        </p>
+        <div class="exp-quote">
+          "A QA tester who understands security catches the bugs that actually matter."
+        </div>
+      </div>
+      <div class="exp-items">
+
+        <div class="exp-item">
+          <div class="exp-top">
+            <div class="exp-role">Cyber Security Engineer <span style="font-size:13px;font-family:var(--mono);color:var(--accent);font-weight:400;">— Testing Focus</span></div>
+            <span class="exp-period">Feb 2026 — Present</span>
+          </div>
+          <div class="exp-company">PT Telkom Indonesia</div>
+          <div class="exp-tags">
+            <span class="tag highlight">VA/PT</span>
+            <span class="tag highlight">Black / White / Grey Box</span>
+            <span class="tag">Remediation Reporting</span>
+            <span class="tag">Compliance Testing</span>
+          </div>
+          <ul class="exp-bullets">
+            <li>Perform structured Vulnerability Assessment and Penetration Testing — applying the same systematic test-case methodology used in QA to security assessments.</li>
+            <li>Execute black box, white box, and grey box testing across enterprise web applications — all three methodologies overlap directly with functional QA testing.</li>
+            <li>Deliver detailed remediation reports outlining each finding, its severity, impact, and actionable fix recommendations — mirroring the structured bug reporting expected in QA workflows.</li>
+            <li>Determine application security compliance based on test results, working closely with development teams — the same dev collaboration QA specialists do daily.</li>
+          </ul>
+        </div>
+
+        <div class="exp-item">
+          <div class="exp-top">
+            <div class="exp-role">Quality Assurance Specialist</div>
+            <span class="exp-period">Aug 2024 — Oct 2024</span>
+          </div>
+          <div class="exp-company">PT Difini Teknologi</div>
+          <div class="exp-tags">
+            <span class="tag highlight">SAST</span>
+            <span class="tag highlight">Penetration Testing</span>
+            <span class="tag">Performance Testing</span>
+            <span class="tag">Client Reporting</span>
+          </div>
+          <ul class="exp-bullets">
+            <li>Conducted Static Application Security Testing (SAST) to identify code-level vulnerabilities early in the development cycle.</li>
+            <li>Performed penetration testing as part of the security testing phase, validating findings before production release.</li>
+            <li>Executed performance testing to benchmark application response times under load.</li>
+            <li>Prepared and presented full documentation results to the client with clear, actionable findings.</li>
+          </ul>
+        </div>
+
+        <div class="exp-item">
+          <div class="exp-top">
+            <div class="exp-role">Quality Assurance Engineer</div>
+            <span class="exp-period">Feb 2024 — Jun 2024</span>
+          </div>
+          <div class="exp-company">Metrodata Academy — MSIB Internship Program Batch 06</div>
+          <div class="exp-tags">
+            <span class="tag highlight">Katalon Studio</span>
+            <span class="tag highlight">JMeter</span>
+            <span class="tag">Regression Testing</span>
+            <span class="tag">Automation</span>
+            <span class="tag">Frontend Review</span>
+          </div>
+          <ul class="exp-bullets">
+            <li>Created comprehensive test scenarios before execution to ensure full feature coverage.</li>
+            <li>Reviewed frontend and backend development processes to identify quality risks early.</li>
+            <li>Executed automated tests using Katalon Studio based on pre-designed test cases.</li>
+            <li>Performed performance testing with JMeter to evaluate website behavior under load.</li>
+            <li>Conducted regression testing after each release cycle to prevent new bugs from reintroducing old issues.</li>
+            <li>Documented all test results and presented findings to stakeholders.</li>
+          </ul>
+        </div>
+
+        <div class="exp-item">
+          <div class="exp-top">
+            <div class="exp-role">QA Freelance</div>
+            <span class="exp-period">Aug 2023 — Sep 2023</span>
+          </div>
+          <div class="exp-company">IBI Kesatuan Bogor</div>
+          <div class="exp-tags">
+            <span class="tag highlight">Black Box Testing</span>
+            <span class="tag highlight">Burp Suite</span>
+            <span class="tag">JMeter</span>
+            <span class="tag">Apache Benchmark</span>
+          </div>
+          <ul class="exp-bullets">
+            <li>Independently designed test scenarios and executed black box testing on the university's web application using Burp Suite.</li>
+            <li>Performed performance testing using Apache Benchmark and JMeter to evaluate website load capacity.</li>
+            <li>Prepared and presented structured test reports to the faculty team, including bug findings and improvement recommendations.</li>
+          </ul>
+        </div>
+
+        <div class="exp-item">
+          <div class="exp-top">
+            <div class="exp-role">Software Tester / QA</div>
+            <span class="exp-period">Feb 2023 — Jun 2023</span>
+          </div>
+          <div class="exp-company">Vocasia — MSIB Internship Program Batch 04</div>
+          <div class="exp-tags">
+            <span class="tag highlight">Grey Box Testing</span>
+            <span class="tag highlight">Burp Suite</span>
+            <span class="tag">Manual Testing</span>
+            <span class="tag">Scrum</span>
+            <span class="tag">Retesting</span>
+          </div>
+          <ul class="exp-bullets">
+            <li>Designed and executed grey box manual testing scenarios on web applications and websites.</li>
+            <li>Conducted security testing with Burp Suite, applying various attack techniques to surface exploitable bugs before release.</li>
+            <li>Reviewed the development process alongside frontend and backend teams to catch issues early in the build cycle.</li>
+            <li>Monitored corrective actions and performed retesting to verify bug resolution.</li>
+            <li>Prepared and presented all test reports to the Scrum Master and Project Manager.</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr>
+
+<!-- SKILLS -->
+<div class="container" id="skills">
+  <div class="section-wrap">
+    <p class="section-eyebrow">02 — Capabilities</p>
+    <h2 class="section-title">Tools & <em>Skills</em></h2>
+    <div class="skills-layout">
+      <div class="skill-block">
+        <span class="skill-block-icon">🧪</span>
+        <div class="skill-block-title">Testing Methods</div>
+        <div class="skill-pills">
+          <span class="pill">Automation Testing</span>
+          <span class="pill">Manual Testing</span>
+          <span class="pill">Integration Testing</span>
+          <span class="pill">Functional Testing</span>
+          <span class="pill">Regression Testing</span>
+          <span class="pill">Performance Testing</span>
+          <span class="pill">Black Box</span>
+          <span class="pill">White Box</span>
+          <span class="pill">Grey Box</span>
+        </div>
+      </div>
+      <div class="skill-block">
+        <span class="skill-block-icon">⚙️</span>
+        <div class="skill-block-title">Automation & Performance</div>
+        <div class="skill-pills">
+          <span class="pill">Katalon Studio</span>
+          <span class="pill">Selenium</span>
+          <span class="pill">JMeter</span>
+          <span class="pill">K6</span>
+          <span class="pill">Apache Benchmark</span>
+        </div>
+      </div>
+      <div class="skill-block">
+        <span class="skill-block-icon">🔐</span>
+        <div class="skill-block-title">Security Testing</div>
+        <div class="skill-pills">
+          <span class="pill">Web Pentest</span>
+          <span class="pill">Burp Suite</span>
+          <span class="pill">OWASP Top 10</span>
+          <span class="pill">Sqlmap</span>
+          <span class="pill">Nmap</span>
+          <span class="pill">Nuclei</span>
+          <span class="pill">Dirsearch</span>
+          <span class="pill">Subfinder</span>
+          <span class="pill">Many more</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr>
+
+<!-- APPROACH -->
+<div class="container" id="approach">
+  <div class="section-wrap">
+    <p class="section-eyebrow">03 — Process</p>
+    <h2 class="section-title">My Testing <em>Approach</em></h2>
+    <div class="approach-grid">
+      <div class="approach-step">
+        <div class="step-num">01</div>
+        <div class="step-accent"></div>
+        <div class="step-title">Understand the App</div>
+        <p class="step-desc">Review requirements, user flows, and feature specs before writing a single test case. Context-first testing catches more bugs.</p>
+      </div>
+      <div class="approach-step">
+        <div class="step-num">02</div>
+        <div class="step-accent"></div>
+        <div class="step-title">Design Test Scenarios</div>
+        <p class="step-desc">Build test cases covering both expected behaviors and edge cases — including boundary conditions and negative scenarios.</p>
+      </div>
+      <div class="approach-step">
+        <div class="step-num">03</div>
+        <div class="step-accent"></div>
+        <div class="step-title">Execute & Document</div>
+        <p class="step-desc">Run tests methodically and document every bug with clear reproduction steps, expected vs. actual results, and severity ratings.</p>
+      </div>
+      <div class="approach-step">
+        <div class="step-num">04</div>
+        <div class="step-accent"></div>
+        <div class="step-title">Verify & Report</div>
+        <p class="step-desc">Retest after fixes, confirm resolutions, and deliver structured reports that developers and stakeholders can actually act on.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr>
+
+<!-- CONTACT -->
+<div class="container" id="contact">
+  <div class="section-wrap">
+    <p class="section-eyebrow">04 — Hire Me</p>
+    <h2 class="section-title">Let's build <em>quality</em> software together.</h2>
+    <div class="contact-layout">
+      <div class="contact-left">
+        <h3>Ready to start a project?</h3>
+        <p>I'm open to freelance QA engagements — whether you need a one-time audit, ongoing testing support, or a full QA cycle from test planning to final report.</p>
+        <a href="mailto:h.syayyidiaz@gmail.com" class="contact-item">
+          <div class="contact-item-icon">✉</div>
+          <div>
+            <span class="contact-item-label">Email</span>
+            <span class="contact-item-value">h.syayyidiaz@gmail.com</span>
+          </div>
+        </a>
+        <a href="tel:+6281382418868" class="contact-item">
+          <div class="contact-item-icon">📱</div>
+          <div>
+            <span class="contact-item-label">Phone / WhatsApp</span>
+            <span class="contact-item-value">+62-813-8241-8868</span>
+          </div>
+        </a>
+        <a href="https://linkedin.com/in/haddidsyayyidiaz" target="_blank" class="contact-item">
+          <div class="contact-item-icon">💼</div>
+          <div>
+            <span class="contact-item-label">LinkedIn</span>
+            <span class="contact-item-value">linkedin.com/in/haddidsyayyidiaz</span>
+          </div>
+        </a>
+      </div>
+      <div class="contact-right">
+        <h4>What makes me different</h4>
+        <p>Most QA testers test for functionality. I test for functionality <em>and</em> security — giving you broader coverage in a single engagement.</p>
+        <ul class="service-list">
+          <li>Manual & functional testing of web applications</li>
+          <li>Test case design & scenario planning</li>
+          <li>Bug reporting with clear reproduction steps</li>
+          <li>Performance testing with JMeter / K6</li>
+          <li>Automation testing with Katalon / Selenium</li>
+          <li>Security-focused QA (Burp Suite, OWASP Top 10)</li>
+          <li>SAST & post-scan remediation recommendations</li>
+          <li>Detailed final reports for clients & stakeholders</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>© 2026 <span>Haddid Syayyidiaz Maulana Ramadhan</span> — QA Specialist</p>
+  <p>Available for Freelance · Indonesia</p>
+</footer>
+
+<script>
+  const items = document.querySelectorAll('.exp-item');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+      }
+    });
+  }, { threshold: 0.1 });
+  items.forEach(item => observer.observe(item));
+</script>
+
+</body>
+</html>
